@@ -25,7 +25,7 @@ const LoginPage = () => {
           </div>
 
           {/* Login Form */}
-          <div className="p-6 sm:p-8 w-full md:w-[320px] text-center flex flex-col justify-center">
+          <div className="p-6 sm:p-8 w-full md:w-[340px] text-center flex flex-col justify-center">
             <h2 className="text-lg font-semibold text-primary mb-4">
               Welcome to QuizTales
             </h2>
