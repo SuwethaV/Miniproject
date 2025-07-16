@@ -1,21 +1,47 @@
-import React from 'react';
-import background from '../../assets/bg.png'; // Background image
-import bookStack from '../../assets/image.png'; // Book image
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import background from '../../assets/bg.png';
+import bookStack from '../../assets/image.png';
 
 const LoginPage = () => {
+  const [userInput, setUserInput] = useState('');
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    if (!userInput.trim()) {
+      alert('Please enter a valid mobile number or email');
+      return;
+    }
+
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/check-user', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userInput }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.exists) {
+        localStorage.setItem('token', data.token);
+        navigate('/');
+      } else {
+        navigate('/NewUserPrompt');
+      }
+    } catch (err) {
+      alert('Something went wrong while checking user');
+    }
+  };
+
   return (
     <div className="relative min-h-screen w-full">
-      {/* Fixed fullscreen background */}
       <div
         className="fixed inset-0 bg-cover bg-center bg-no-repeat bg-fixed z-[-1]"
         style={{ backgroundImage: `url(${background})` }}
       />
 
-      {/* Main content container */}
       <div className="flex items-center justify-center min-h-screen w-full">
         <div className="flex flex-col md:flex-row bg-white bg-opacity-90 rounded-md shadow-lg backdrop-blur-md overflow-hidden max-w-[700px] w-full mx-4">
-          
-          {/* Book Image */}
           <div className="md:block hidden">
             <img
               src={bookStack}
@@ -24,15 +50,10 @@ const LoginPage = () => {
             />
           </div>
 
-          {/* Login Form */}
           <div className="p-6 sm:p-8 w-full md:w-[340px] text-center flex flex-col justify-center">
-            <h2 className="text-lg font-semibold text-primary mb-4">
-              Welcome to QuizTales
-            </h2>
+            <h2 className="text-lg font-semibold text-primary mb-4">Welcome to QuizTales</h2>
 
-            <h3 className="text-sm font-semibold mb-1 text-black">
-              Sign in or create account
-            </h3>
+            <h3 className="text-sm font-semibold mb-1 text-black">Sign in or create account</h3>
             <label className="block text-sm text-black mb-2" htmlFor="userInput">
               Enter Mobile number or email:
             </label>
@@ -40,15 +61,16 @@ const LoginPage = () => {
             <input
               type="text"
               id="userInput"
+              value={userInput}
+              onChange={(e) => setUserInput(e.target.value)}
               className="w-full px-4 py-2 border border-primary rounded-md mb-4 focus:outline-none focus:ring-2 focus:ring-primary"
               placeholder="Email or Mobile number"
             />
 
             <button
+              onClick={handleLogin}
               className="w-full py-2 rounded-full transition text-white"
-              style={{
-                backgroundColor: '#a30bfb',
-              }}
+              style={{ backgroundColor: '#a30bfb' }}
               onMouseOver={(e) => (e.target.style.backgroundColor = '#8d05db')}
               onMouseOut={(e) => (e.target.style.backgroundColor = '#a30bfb')}
             >

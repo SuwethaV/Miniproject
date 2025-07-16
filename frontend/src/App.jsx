@@ -1,12 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
-import LoginPage from './pages/login/LoginPage'
-import NewUserPrompt from './pages/login/NewUserPrompt'
-import CreateAccount from './pages/login/Register'
+// src/App.jsx
+import { BrowserRouter as Router } from 'react-router-dom';
+import AppRoutes from './Routes/App.routes';
 
 function App() {
   return (
-    <CreateAccount/>
-  )
+    <Router>
+      <AppRoutes />
+    </Router>
+  );
 }
 
-export default App
+export default App;
