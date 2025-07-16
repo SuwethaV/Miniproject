@@ -1,14 +1,21 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
+export default {
   content: [
-    "./src/**/*.{js,jsx,ts,tsx}", // ✅ Include all your React component files
+    "./index.html",
+    "./src/**/*.{js,jsx,ts,tsx}",
   ],
   theme: {
+    // ✅ Add this
     extend: {
       colors: {
         primary: "#a30bfbff", // Custom purple for QuizTales
       },
     },
+    container: {
+      center: true,
+      padding: '2rem',
+    },
+    extend: {},
   },
   plugins: [],
 };
