@@ -1,29 +1,39 @@
 // src/Routes/App.routes.js
-import { Routes, Route } from 'react-router-dom';
-import LoginPage from '../pages/login/LoginPage';
-import NewUserPrompt from '../pages/login/NewUserPrompt';
-import CreateAccount from '../pages/login/Register';
-import ProtectedRoute from './ProtectedRoute';
+import { Routes, Route, Navigate } from 'react-router-dom'
+import LoginPage from '../pages/login/LoginPage'
+import NewUserPrompt from '../pages/login/NewUserPrompt'
+import CreateAccount from '../pages/login/Register'
+import ProtectedRoute from './ProtectedRoute'
 
 
-const HomePage = () => (
-  <div className="text-center mt-20 text-3xl text-[#a30bfb]">Welcome to Home Page</div>
-);
+const AppRoutes = () => (
+  <Routes>
+    {/* Public routes */}
+    <Route path="/LoginPage" element={<LoginPage />} />
+    {/* Equal alias for convenience */}
+    <Route path="/" element={<Navigate to="/LoginPage" replace />} />
 
-const AppRoutes = () => {
-  return (
-    <Routes>
-      <Route path="/" element={
+    {/* Protected routes */}
+    <Route
+      path="/NewUserPrompt"
+      element={
         <ProtectedRoute>
-          <HomePage />
+          <NewUserPrompt />
         </ProtectedRoute>
-      } />
-      <Route path="/LoginPage" element={<LoginPage />} />
-      <Route path="/NewUserPrompt" element={<NewUserPrompt />} />
-      <Route path="/Register" element={<CreateAccount />} />
-     
-    </Routes>
-  );
-};
+      }
+    />
+    <Route
+      path="/Register"
+      element={
+        <ProtectedRoute>
+          <CreateAccount />
+        </ProtectedRoute>
+      }
+    />
 
-export default AppRoutes;
+    {/* Fallback for any invalid route */}
+    <Route path="*" element={<Navigate to="/LoginPage" replace />} />
+  </Routes>
+)
+
+export default AppRoutes

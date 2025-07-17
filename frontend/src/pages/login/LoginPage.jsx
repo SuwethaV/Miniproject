@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import background from '../../assets/bg.png';
 import bookStack from '../../assets/image.png';
+import useAuthStore from '../../store/useAuthstore'; 
 
 const LoginPage = () => {
   const [userInput, setUserInput] = useState('');

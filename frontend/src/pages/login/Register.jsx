@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+
 import background from '../../assets/bg.png';
+import { useNavigate } from 'react-router-dom';
 
 const CreateAccount = () => {
   const [form, setForm] = useState({ name: '', email: '', mobile: '', password: '' });
@@ -45,6 +47,14 @@ const CreateAccount = () => {
     alert('Something went wrong');
   }
 };
+const navigate = useNavigate();
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/LoginPage');
+    }
+  }, []);
 
   return (
     <div className="relative min-h-screen w-full">
