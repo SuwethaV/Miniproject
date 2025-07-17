@@ -18,13 +18,19 @@ const AppRoutes = () => (
     <Route
       path="/NewUserPrompt"
       element={
+        <ProtectedRoute role="register">
+
           <NewUserPrompt />
+        </ProtectedRoute>
       }
     />
     <Route
       path="/Register"
       element={
+        <ProtectedRoute role="register">
+
           <CreateAccount />
+        </ProtectedRoute>
       }
     />
     <Route

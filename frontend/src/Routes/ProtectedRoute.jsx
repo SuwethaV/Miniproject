@@ -2,10 +2,13 @@
 import { Navigate } from 'react-router-dom';
 import useAuthStore from '../store/useAuthstore';
 
-const ProtectedRoute = ({ children }) => {
+const ProtectedRoute = ({ children,role }) => {
   const token = useAuthStore((s) => s.token) || localStorage.getItem('token');
 
   if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+  if(token && role!==token){
     return <Navigate to="/login" replace />;
   }
 

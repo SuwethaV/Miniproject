@@ -25,8 +25,9 @@ const LoginPage = () => {
 
       if (response.ok && data.exists) {
         localStorage.setItem('token', data.token);
-        navigate('/');
+        navigate('/home');
       } else {
+        localStorage.setItem('token', "register");
         navigate('/NewUserPrompt');
       }
     } catch (err) {
