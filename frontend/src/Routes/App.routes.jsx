@@ -4,6 +4,7 @@ import LoginPage from '../pages/login/LoginPage'
 import NewUserPrompt from '../pages/login/NewUserPrompt'
 import CreateAccount from '../pages/login/Register'
 import ProtectedRoute from './ProtectedRoute'
+import Home from '../pages/home/Home'
 
 
 const AppRoutes = () => (
@@ -17,16 +18,21 @@ const AppRoutes = () => (
     <Route
       path="/NewUserPrompt"
       element={
-        <ProtectedRoute>
           <NewUserPrompt />
-        </ProtectedRoute>
       }
     />
     <Route
       path="/Register"
       element={
-        <ProtectedRoute>
           <CreateAccount />
+      }
+    />
+    <Route
+      path="/home"
+      element={
+        <ProtectedRoute>
+
+          <Home />
         </ProtectedRoute>
       }
     />

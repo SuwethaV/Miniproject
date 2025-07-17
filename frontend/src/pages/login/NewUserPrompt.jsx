@@ -6,11 +6,11 @@ import { useEffect } from 'react';
 
 const NewUserPrompt = () => {
  
-  const navigate = useNavigate()
-  useEffect(() => {
-    const token = localStorage.getItem('token') || ''
-    if (!token) navigate('/login', { replace: true })
-  }, [])
+  // const navigate = useNavigate()
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token') || ''
+  //   if (!token) navigate('/login', { replace: true })
+  // }, [])
 
   return (
     <div className="relative min-h-screen w-full">

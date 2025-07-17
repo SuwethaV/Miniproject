@@ -47,14 +47,14 @@ const CreateAccount = () => {
     alert('Something went wrong');
   }
 };
-const navigate = useNavigate();
+// const navigate = useNavigate();
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/LoginPage');
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     navigate('/LoginPage');
+  //   }
+  // }, []);
 
   return (
     <div className="relative min-h-screen w-full">
