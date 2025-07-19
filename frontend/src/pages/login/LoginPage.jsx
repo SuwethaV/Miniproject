@@ -14,27 +14,53 @@ const LoginPage = () => {
       return;
     }
 
-    try {
-      const response = await fetch('http://localhost:5000/api/auth/check-user', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ userInput }),
-      });
+  //   try {
+  //     const response = await fetch('http://localhost:5000/api/auth/check-user', {
+  //       method: 'POST',
+  //       headers: { 'Content-Type': 'application/json' },
+  //       body: JSON.stringify({ userInput }),
+  //     });
 
-      const data = await response.json();
+  //     const data = await response.json();
 
-      if (response.ok && data.exists) {
-        localStorage.setItem('token', data.token);
-        navigate('/home');
-      } else {
-        localStorage.setItem('token', "register");
-        navigate('/NewUserPrompt');
-      }
-    } catch (err) {
-      alert('Something went wrong while checking user');
+  //     if (response.ok && data.exists) {
+  //       localStorage.setItem('token', data.token);
+  //        useAuthStore.getState().setToken(data.token);
+  //       navigate('/home');
+  //     } else {
+  //       console.log("else part")
+  //       localStorage.setItem('token', "register");
+  //       useAuthStore.getState().setToken("register");
+  //       navigate('/NewUserPrompt');
+  //     }
+  //   } catch (err) {
+  //     alert('Something went wrong while checking user');
+  //   }
+  // };
+ try {
+    const response = await fetch('http://localhost:5000/api/auth/check-user', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ userInput }),
+    });
+
+    const data = await response.json();
+
+    if (response.ok && data.exists) {
+      localStorage.setItem('token', data.token);
+      useAuthStore.getState().setToken(data.token);
+      sessionStorage.setItem('fromAuthFlow', 'true');  // Add this line
+      navigate('/home');
+    } else {
+      localStorage.setItem('token', "register");
+      useAuthStore.getState().setToken("register");
+      sessionStorage.setItem('fromAuthFlow', 'true');  // Add this line
+      navigate('/NewUserPrompt');
     }
-  };
-
+  } catch (err) {
+    alert('Something went wrong while checking user');
+  }
+};
   return (
     <div className="relative min-h-screen w-full">
       <div

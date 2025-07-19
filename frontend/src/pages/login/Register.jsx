@@ -9,6 +9,16 @@ const CreateAccount = () => {
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
+  const navigate = useNavigate();
+
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  const fromAuthFlow = sessionStorage.getItem('fromAuthFlow') === 'true';
+  
+  if (!token || token !== "register" || !fromAuthFlow) {
+    navigate('/LoginPage', { replace: true });
+  }
+}, [navigate]);
 
  const handleSubmit = async () => {
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,7 +39,35 @@ const CreateAccount = () => {
     return;
   }
 
-  try {
+//   try {
+//     const response = await fetch('http://localhost:5000/api/auth/register', {
+//       method: 'POST',
+//       headers: { 'Content-Type': 'application/json' },
+//       body: JSON.stringify(form),
+//     });
+
+//     const data = await response.json();
+//     if (response.ok) {
+//   localStorage.setItem('token', data.token);
+//   useAuthStore.getState().setToken(data.token);
+//   alert('User registered successfully!');
+//   navigate('/home'); // Add navigation after successful registration
+// }
+   
+    
+//   } catch (err) {
+//     alert('Something went wrong');
+//   }
+// };
+// const navigate = useNavigate();
+
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token');
+  //   if (!token) {
+  //     navigate('/LoginPage');
+  //   }
+  // }, []);
+try {
     const response = await fetch('http://localhost:5000/api/auth/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -39,7 +77,10 @@ const CreateAccount = () => {
     const data = await response.json();
 
     if (response.ok) {
-      alert('User registered successfully!');
+      localStorage.setItem('token', data.token);
+      useAuthStore.getState().setToken(data.token);
+      sessionStorage.setItem('fromAuthFlow', 'true');
+      navigate('/home');
     } else {
       alert(data.message || 'Registration failed');
     }
@@ -47,15 +88,6 @@ const CreateAccount = () => {
     alert('Something went wrong');
   }
 };
-// const navigate = useNavigate();
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token');
-  //   if (!token) {
-  //     navigate('/LoginPage');
-  //   }
-  // }, []);
-
   return (
     <div className="relative min-h-screen w-full">
       {/* Background */}
